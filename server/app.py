@@ -55,6 +55,25 @@ def create_workout():
     return jsonify(workout_schema.dump(workout)), 201
 
 
+@app.route("/workouts/<int:workout_id>", methods=["PUT"])
+def update_workout(workout_id):
+    workout = Workout.query.get_or_404(workout_id)
+    payload = request.get_json()
+    if not payload:
+        return jsonify({"error": "Request body is required."}), 400
+
+    try:
+        data = workout_schema.load(payload, partial=True)
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 400
+
+    for key, value in data.items():
+        setattr(workout, key, value)
+
+    db.session.commit()
+    return jsonify(workout_schema.dump(workout))
+
+
 @app.route("/workouts/<int:workout_id>", methods=["DELETE"])
 def delete_workout(workout_id):
     workout = Workout.query.get_or_404(workout_id)
@@ -92,6 +111,25 @@ def create_exercise():
     return jsonify(exercise_schema.dump(exercise)), 201
 
 
+@app.route("/exercises/<int:exercise_id>", methods=["PUT"])
+def update_exercise(exercise_id):
+    exercise = Exercise.query.get_or_404(exercise_id)
+    payload = request.get_json()
+    if not payload:
+        return jsonify({"error": "Request body is required."}), 400
+
+    try:
+        data = exercise_schema.load(payload, partial=True)
+    except Exception as exc:
+        return jsonify({"error": str(exc)}), 400
+
+    for key, value in data.items():
+        setattr(exercise, key, value)
+
+    db.session.commit()
+    return jsonify(exercise_schema.dump(exercise))
+
+
 @app.route("/exercises/<int:exercise_id>", methods=["DELETE"])
 def delete_exercise(exercise_id):
     exercise = Exercise.query.get_or_404(exercise_id)
@@ -121,6 +159,14 @@ def create_workout_exercise(workout_id, exercise_id):
     db.session.add(workout_exercise)
     db.session.commit()
     return jsonify(workout_exercise_schema.dump(workout_exercise)), 201
+
+
+@app.route("/workout_exercises/<int:workout_exercise_id>", methods=["DELETE"])
+def delete_workout_exercise(workout_exercise_id):
+    join_record = WorkoutExercise.query.get_or_404(workout_exercise_id)
+    db.session.delete(join_record)
+    db.session.commit()
+    return jsonify({"message": "Workout exercise deleted successfully."})
 
 
 if __name__ == "__main__":
