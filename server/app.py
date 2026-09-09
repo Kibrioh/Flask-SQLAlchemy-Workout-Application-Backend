@@ -1,4 +1,6 @@
 
+from pathlib import Path
+
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 
@@ -9,7 +11,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, directory=str(Path(__file__).with_name("migrations")))
 db.init_app(app)
 
 exercise_schema = ExerciseSchema()

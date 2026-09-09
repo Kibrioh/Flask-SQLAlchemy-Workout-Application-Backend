@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 
-from app import app
-from models import Exercise, Workout, WorkoutExercise, db
+from server.app import app
+from server.models import Exercise, Workout, WorkoutExercise, db
 
 
 with app.app_context():
