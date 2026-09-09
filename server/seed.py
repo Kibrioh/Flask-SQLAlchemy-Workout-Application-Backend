@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 
-import os
-import sys
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
-
-from server.app import app
-from server.models import Exercise, Workout, WorkoutExercise, db
+from app import app
+from models import Exercise, Workout, WorkoutExercise, db
 
 
 with app.app_context():

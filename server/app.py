@@ -1,9 +1,3 @@
-import os
-import sys
-
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
 
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
@@ -11,10 +5,9 @@ from flask_migrate import Migrate
 from server.models import Exercise, Workout, WorkoutExercise, db
 from server.schemas import ExerciseSchema, WorkoutExerciseSchema, WorkoutSchema
 
-app = Flask(__name__, instance_relative_config=True)
-os.makedirs(app.instance_path, exist_ok=True)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(app.instance_path, "app.db")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 migrate = Migrate(app, db)
 db.init_app(app)

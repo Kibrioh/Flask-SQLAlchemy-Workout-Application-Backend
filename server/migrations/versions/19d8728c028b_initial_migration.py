@@ -1,8 +1,8 @@
-"""initial workout models
+"""initial migration
 
-Revision ID: 9a24e5144228
+Revision ID: 19d8728c028b
 Revises: 
-Create Date: 2026-09-09 20:23:33.506595
+Create Date: 2026-09-09 21:16:04.849829
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9a24e5144228'
+revision = '19d8728c028b'
 down_revision = None
 branch_labels = None
 depends_on = None
